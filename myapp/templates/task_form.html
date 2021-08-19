@@ -1,0 +1,27 @@
+
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div class="header-bar">
+<h1>Add Your Task</h1>
+<a class="btn btn-dark" href="{% url 'tasks' %}">Go Back</a>
+</div>
+
+<div class="card-body">
+<form action="" method="POST" enctype="multipart/form-data">
+{% csrf_token %}
+
+{{form.as_p}}
+<label>Start time:</label>
+<input type="datetime-local" name="start_time" required>
+<label>End time:</label>
+<input type="datetime-local" name="end_time" required>
+<br>
+
+<input onmouseover="myfunction()" class="btn btn-outline-success"  type="submit" value="sumbit">
+
+</form>
+</div>
+
+{% endblock content %}

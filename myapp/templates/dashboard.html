@@ -1,0 +1,91 @@
+
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="header-bar">
+    <div>
+        <h1>Hello {{request.user|title}}</h1>
+        
+    </div>
+
+    {% if request.user.is_authenticated  %}
+        
+        <a class="btn btn-dark my-3" href="{% url 'logout' %}">Logout</a>
+    {% else %}
+        <a class="btn btn-danger my-3" href="{% url 'login' %}">Login</a>
+    {% endif %}
+</div>
+
+
+
+<form action="" method="get">
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="Monday">
+        <label class="form-check-label" for="inlineRadio1">Monday</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="Tuesday">
+        <label class="form-check-label" for="inlineRadio2">Tuesday</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="Wednesday" >
+        <label class="form-check-label" for="inlineRadio3">Wednesday</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="Thursday" >
+        <label class="form-check-label" for="inlineRadio4">Thursday</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio5" value="Friday" >
+        <label class="form-check-label" for="inlineRadio5">Friday</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio6" value="Saturday" >
+        <label class="form-check-label" for="inlineRadio6">Saturday</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio7" value="Sunday" >
+        <label class="form-check-label" for="inlineRadio7">Sunday</label>
+      </div>
+      <br>
+    <input class="btn btn-primary my-3" type="submit" value="Search">
+    <a class="btn btn-danger my-3" href="{% url 'tasks' %}">RESET</a>
+</form>
+
+
+<hr>
+<h1>Your Tasks</h1>
+
+<a class="btn btn-primary my-3" href="{% url 'task-create' %}">add task</a>
+<form action="" method="post">
+    {% csrf_token %}
+<table>
+<tr>
+<th>Task</th>
+<th>Day</th>
+<th>Start Time</th>
+<th>End Time</th>
+<th>Time Left</th>
+<th>Stop The Task</th>
+</tr>
+{% for task in tasks %}
+<tr>
+<td>{{ task.title }}</td>
+<td>{{task.day}}</td>
+<td id="start_time">{{task.start_time}}</td>
+<td id="end_time">{{task.end_time}}</td>
+{% if task.status %}
+
+  <td id="status">Completed</td>
+{% else %}
+  <td id="time_left"></td>
+  <td><button class="btn btn-danger my-3" name={{task.id}} id ="id_button" value="" >END</button></td>
+{% endif %}
+</tr>
+{% empty %}
+<h2>no items</h2>
+{% endfor %}
+</table>
+</form>
+
+{% endblock content %}
